@@ -4044,20 +4044,20 @@ _validate_and_set_defaults(slurm_ctl_conf_t *conf, s_p_hashtbl_t *hashtbl)
 		conf->power_allocatortype = xstrdup(DEFAULT_POWER_ALLOCATOR_TYPE);
 
 	if (!s_p_get_uint32(&conf->power_allocatorinterval, "PowerAllocatorInterval", hashtbl))
-		conf->power_allocatorinterval = xstrdup(DEFAULT_POWER_ALLOCATOR_INTERVAL);	
+		conf->power_allocatorinterval = DEFAULT_POWER_ALLOCATOR_INTERVAL;	
 
 	if (!s_p_get_uint32(&conf->power_analyzerinterval, "PowerAnalyzerInterval", hashtbl))
-		conf->power_analyzerinterval = xstrdup(DEFAULT_POWER_ANALYZER_INTERVAL);	
+		conf->power_analyzerinterval = DEFAULT_POWER_ANALYZER_INTERVAL;	
 
 	if (!s_p_get_uint32(&conf->power_monitorinterval, "PowerMonitorInterval", hashtbl))
-		conf->power_monitorinterval = xstrdup(DEFAULT_POWER_MONITOR_INTERVAL);	
+		conf->power_monitorinterval = DEFAULT_POWER_MONITOR_INTERVAL;	
 
 	
 	if (!s_p_get_string(&conf->power_analyzertype, "PowerAnalyzerType", hashtbl))
 		conf->power_analyzertype = xstrdup(DEFAULT_POWER_ANALYZER_TYPE);
 
 	if (!s_p_get_uint32(&conf->power_alert, "PowerAlert", hashtbl))
-		conf->power_alert = xstrdup(DEFAULT_POWER_ALERT);
+		conf->power_alert = DEFAULT_POWER_ALERT;
 	
 	
 	if (!s_p_get_string(&conf->power_schedule_slurmd, "PowerScheduleSlurmdType", hashtbl))
