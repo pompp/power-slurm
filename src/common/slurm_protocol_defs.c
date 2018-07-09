@@ -4378,7 +4378,6 @@ extern int slurm_free_msg_data(slurm_msg_type_t type, void *data)
 	case REQUEST_EVENT_LOG:
 		slurm_free_event_log_msg(data);
 		break;
-/*
 	case REQUEST_POWER_KNOB_GET_INFO:
 		slurm_free_power_knob_get_info_req_msg(data);
 		break;
@@ -4397,7 +4396,6 @@ extern int slurm_free_msg_data(slurm_msg_type_t type, void *data)
 	case RESPONSE_POWER_KNOB_GET_CACHE_INFO:
 		slurm_free_power_knob_get_cache_info_node_resp_msg(data);
 		break;
-*/		
 	default:
 		error("invalid type trying to be freed %u", type);
 		break;

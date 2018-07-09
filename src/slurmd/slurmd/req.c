@@ -431,33 +431,23 @@ slurmd_req(slurm_msg_t *msg)
 	case REQUEST_POWER_KNOB_GET_INFO:
 		debug3("Processing RPC: REQUEST_POWER_KNOB_GET_INFO");
 		_rpc_power_knob_get_info(msg);
-		debug3("req.c: Done RPC: REQUEST_POWER_KNOB_GET_INFO");
-		slurm_free_power_knob_get_info_req_msg(msg->data);
-        debug3("req.c: Done slurm_free_power_knob_get_info_req_msg(msg->data)");
 		break;
 	case REQUEST_POWER_KNOB_GET_CACHE_INFO:
 		debug3("Processing RPC: REQUEST_POWER_KNOB_GET_CACHE_INFO");
 		_rpc_power_knob_get_cache_info(msg);
-		slurm_free_power_knob_get_cache_info_req_msg(msg->data);
 		break;
 	case REQUEST_POWER_KNOB_SET:
 		debug3("Processing RPC: REQUEST_POWER_KNOB_SET");
 		_rpc_power_knob_set(msg);
-		debug3("req.c: Done RPC: REQUEST_POWER_KNOB_SET");
-		slurm_free_power_knob_set_req_msg(msg->data);
 		break;
 	case REQUEST_POWER_CAP_SET:
 		debug3("Processing RPC: REQUEST_POWER_CAP_SET");
 		_rpc_power_knob_cap(msg);
-		debug3("req.c: Done RPC: REQUEST_POWER_CAP_SET");
-		slurm_free_power_knob_cap_req_msg(msg->data);
 		break;		
 
 	case REQUEST_POWER_SCHEDULE_SLURMD:
 		debug3("Processing RPC: REQUEST_SCHEDULE_SLURMD_SET");
 		_rpc_power_schedule_slurmd(msg);
-		debug3("req.c: Done RPC: REQUEST_SCHEDULE_SLURMD_SET");
-		 slurm_free_power_schedule_slurmd_req_msg(msg->data);
 		break;	
 
 		
