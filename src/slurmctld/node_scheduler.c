@@ -1481,6 +1481,11 @@ _get_req_features(struct node_set *node_set_ptr, int node_set_size,
 		       slurm_strerror(error_code));
 	}
 
+	/*check power consumption using power_allocator*/
+	if(error_code != SLURM_SUCCESS)
+		if(power_allocator_g_job_test() > 0)
+		 	error_code = ESLURM_POWER_NOT_AVAIL;
+
 	FREE_NULL_LIST(preemptee_candidates);
 
 	/* restore job's initial required node bitmap */

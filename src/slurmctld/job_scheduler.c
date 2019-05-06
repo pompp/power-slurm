@@ -2359,7 +2359,6 @@ extern void launch_job(struct job_record *job_ptr)
 	batch_job_launch_msg_t *launch_msg_ptr;
 	uint16_t protocol_version = (uint16_t) NO_VAL;
 	agent_arg_t *agent_arg_ptr;
-    if (power_allocator_g_job_test() > 0){
 #ifdef HAVE_FRONT_END
 	front_end_record_t *front_end_ptr;
 	front_end_ptr = find_front_end_record(job_ptr->batch_host);
@@ -2387,8 +2386,6 @@ extern void launch_job(struct job_record *job_ptr)
 
 	/* Launch the RPC via agent */
 	agent_queue_request(agent_arg_ptr);
-	}
-	else debug ("Not enough resources");
 }
 
 /*
