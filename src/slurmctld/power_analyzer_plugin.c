@@ -56,7 +56,11 @@ typedef struct power_analyzer_ops {
 	int (*estimate_job_power)
 			(struct job_record *, bitstr_t *, 
 			uint32_t, uint32_t, uint32_t, uint32_t,
-			uint32_t, uint32_t, uint32_t, uint32_t);
+			uint32_t, uint32_t, uint32_t, uint32_t *);
+	int (*estimate_job_dynamic_power)
+			(struct job_record *, bitstr_t *, 
+			uint32_t, uint32_t, uint32_t, uint32_t,
+			uint32_t, uint32_t, uint32_t, uint32_t **, uint32_t *);
 	int (*estimate_job_time)
 			(struct job_record *, bitstr_t *, 
 			uint32_t , uint32_t , uint32_t ,uint32_t , 
@@ -76,6 +80,7 @@ typedef struct power_analyzer_ops {
 static const char *syms[] = {
 	"power_analyzer_p_reconfig",
 	"power_analyzer_p_estimate_job_power", 
+	"power_analyzer_p_estimate_job_dynamic_power", 
 	"power_analyzer_p_estimate_job_time",
 	"power_analyzer_p_estimate_job_performance", 
 	"power_analyzer_p_analyze_finished_job",
@@ -195,7 +200,7 @@ int power_analyzer_g_estimate_job_power(struct job_record *job_ptr, bitstr_t *bi
 			uint32_t min_nodes, uint32_t max_nodes, uint32_t req_nodes,
 			uint32_t constraint_mode,
 			uint32_t cpu_cap, uint32_t dram_cap, uint32_t frequency, 
-			uint32_t job_power)
+			uint32_t *job_power)
 {
 	if ( power_analyzer_init() < 0 )
 		return SLURM_ERROR;
@@ -206,6 +211,44 @@ int power_analyzer_g_estimate_job_power(struct job_record *job_ptr, bitstr_t *bi
 		job_power);
 }
 
+/* *********************************************************************** */
+/*  TAG(               power_analyzer_g_estimate_job_dynamic_power      )  */
+/* *********************************************************************** */
+/**
+ * Estimate a job power consumption under specified constraints (dynamic)
+ * IN job_ptr - pointer to job being considered for estimation
+ * IN/OUT bitmap - map of nodes being considered for estimation on input,
+ *                map of nodes actually to be assigned on output
+ * IN min_nodes - minimum number of nodes to allocate to job
+ * IN max_nodes - maximum number of nodes to allocate to job
+ * IN req_nodes - requested (or desired) count of nodes
+ * IN constraint_mode - choose how to estimate power.
+ *                      give flags which constraints are used.
+ *                       PA_FLAG_CPU_CAP : use maximum cpu cap
+ *                       PA_FLAG_DRAM_CAP : use maximum dram cap
+ *                       PA_FLAG_FREQ : use maximum frequency 
+ * IN cpu_cap - maximum number of power to allocate to a cpu socket
+ * IN dram_cap - maximum number of power to allocate to a memory channel
+ *            currently sopported Intel RAPL
+ * IN frequency - maximum number of frequency to a cpu
+ * OUT job_power_vector - estimated power consumption by under constraints (dynamic)
+ * IN/OUT samples number of job_power
+ * RET zero on success, EINVAL otherwise
+ */
+int power_analyzer_g_estimate_job_dynamic_power(struct job_record *job_ptr, bitstr_t *bitmap, 
+			uint32_t min_nodes, uint32_t max_nodes, uint32_t req_nodes,
+			uint32_t constraint_mode,
+			uint32_t cpu_cap, uint32_t dram_cap, uint32_t frequency, 
+			uint32_t **job_power_vector, uint32_t *samples)
+{
+	if ( power_analyzer_init() < 0 )
+		return SLURM_ERROR;
+
+	return (*(ops.estimate_job_dynamic_power))
+		(job_ptr, bitmap,  min_nodes, max_nodes, req_nodes,
+		constraint_mode, cpu_cap, dram_cap, frequency,
+		job_power_vector, samples);
+}
 /**
  * Estimate a job execution time under specified constraints
  * IN job_ptr - pointer to job being considered for estimation

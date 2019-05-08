@@ -222,7 +222,7 @@ static void node_power_schedule(void)
 				debug("_get_node_power_task: can't get info from slurmd(NODE : %s)", node_ptr->name);
 			}else{				
 				socket_number = socket_cnt;
-				debug("socket_number", socket_number);				
+				debug("socket_number %d", socket_number);				
 				for (j=0; j < number_of_node; j++) {
 					debug ("Dummy inside node_power_schedule 5.1");				 
 					 if (strcmp(node_name[j], node_ptr->name) == 0){
@@ -278,6 +278,14 @@ static void node_power_schedule(void)
 			debug ("Dummy inside node_power_schedule 9");
 		}
 		
+		debug ("test print sum_pkg %d",sum_pkg);
+		debug ("test print counter1 %d",counter1);
+		debug ("test print socket_number %d",socket_number);
+		debug ("test print sum_dram %d",sum_dram);
+		debug ("test print sum_PMC0 %d",sum_PMC0);
+		debug ("test print sum_PMC1 %d",sum_PMC1);
+		debug ("test print counter2 %d",counter2);
+
 		//All have same socket_number (normally 2)
 		debug ("Dummy inside node_power_schedule 10");
 		avg_pkg = sum_pkg / counter1 / socket_number;
